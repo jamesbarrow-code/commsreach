@@ -27,6 +27,7 @@ Schema:
       "type": "journalist|podcaster|newsletter|YouTuber|commentator",
       "tier": "tier1|tier2|tier3",
       "score": 80,
+      "reach": 70,
       "reason": "string",
       "evidence": "string",
       "pitch_angle": "string"
@@ -41,6 +42,12 @@ Schema:
   "wall_summary": "string"
 }
 
+=== TWO INDEPENDENT SCORES PER TARGET ===
+Every target gets two separate 0-100 scores. DO NOT conflate them - scoring them as if they were the same number is the single most common mistake.
+- score = LIKELIHOOD TO COVER: how probable it is that this specific person or outlet actually runs or engages with this story. A friendly trade editor, a known contact, or someone with a documented personal stake can be very high here even if their audience is small.
+- reach = REACH / IMPACT: the size and influence of the audience the coverage would reach. National papers, primetime broadcast and large-subscriber channels score high; niche trade titles or small podcasts score lower even when likelihood is high.
+These are independent. A specialist trade journalist who will almost certainly cover it might be likelihood 90 / reach 50. A national correspondent who might pass on it might be likelihood 55 / reach 95. Score both honestly - the whole value is letting the user see the trade-off between a near-certain niche hit and a high-impact long shot.
+
 === THE TARGETS LIST - THE CORE VALUE OF THIS TOOL ===
 This is for journalists and media you can ACTUALLY pitch. Work hard on it with extensive web search.
 
@@ -48,6 +55,8 @@ Hard exclusions - these people are NEVER pitch targets and must NOT appear in th
 - Academics and university-affiliated researchers in regulated or contested sectors. They protect their independence and will not amplify industry-originated research or commercial stories. They are not pitchable.
 - Commentators who publicly declare they take no industry funding, or whose entire public identity is independence from the sector in question. They will not be seen amplifying industry-originated material directly. Not pitchable for an industry-originated story.
 Do not include these people even to fill slots. A list of 5 real pitch targets is far better than 8 padded with people who will not run the story.
+
+DESK CONSISTENCY: If you flag an outlet or a specific desk in the coverage-risk (avoid) list, do NOT place a journalist from that same flagged desk in the targets list. You MAY target a journalist at a clearly different desk of the same title - for example the food desk when the comment desk is flagged - but only if their work plainly sits on that other desk. If a journalist straddles the flagged desk, leave them out rather than create an apparent contradiction. Whenever you target someone at a title whose other desk you have flagged, say so explicitly in their pitch_angle (for example: "pitch via the Money desk, not the health desk").
 
 WHAT THE TARGET LIST MUST CONTAIN:
 - Slots 1-4: Named working journalists at mainstream general-audience outlets (national papers, broadcast, consumer magazines, mainstream websites) found by searching their ACTUAL recent bylines. Search exhaustively. Look for:
@@ -60,7 +69,7 @@ Run multiple searches. Do not stop at the first few names. The whole value of th
 
 EVIDENCE MUST BE VERIFIABLE. For every target, the evidence field must point to something a human can locate and check - name the publication and the approximate date, headline or subject of the specific relevant piece. Do not assert a track record, a personal stake or a past article you cannot point to a specific, locatable source for. If you cannot find specific evidence for a candidate, lower their score or leave them out rather than inventing support. A confident-sounding but unverifiable claim is worse than no claim.
 
-ORDERING: output targets sorted by score, highest first.
+ORDERING: output targets sorted by score (likelihood to cover), highest first.
 
 === THE "AVOID" LIST - OUTLET LEVEL ONLY, NEVER NAMED INDIVIDUALS ===
 This section exists to help the team plan: it flags PUBLICATIONS, DESKS or PROGRAMMES whose coverage of this topic has tended to be sceptical or critical, so the story can be sequenced, pre-briefed or framed accordingly. It is NOT a blacklist of people and NOT a judgement of anyone's motives, honesty or good faith.
@@ -68,15 +77,17 @@ This section exists to help the team plan: it flags PUBLICATIONS, DESKS or PROGR
 STRICT RULES - these are absolute:
 - NEVER name an individual journalist, columnist, editor or presenter in this list. Refer only to the outlet, or to a named desk or programme - for example "[Title] motoring desk", "[Title] news desk", "[Programme name]". If the only thing you know is tied to one person, generalise it to the desk or leave it out.
 - Describe the outlet's coverage TENDENCY on this topic in neutral, factual terms. Do NOT use words like "hostile", "clickbait", "alarmist", "poor-faith", "dishonest", "scare", or assert that anyone or any outlet "falsely claimed" anything.
-- Cite evidence ONLY where it is genuine, locatable public record: an official report or regulator that names the publication, or a correction or clarification the publication itself issued. Phrase it strictly as a matter of record - "a correction was issued in [year]", "named in [official report]" - never as a finding of bad faith. If you are not confident a public-record item is real and locatable, cite nothing and give only a directional note such as "recent coverage of this topic at this title has tended to be critical".
-- Advocacy organisations and campaign groups whose stated institutional mission is opposition to this sector or topic CAN be named as organisations - that is a public institutional position, not a characterisation of an individual.
-- 3-5 entries maximum. Outlets, desks and programmes only.
+- Cite evidence ONLY where it is genuine, locatable public record: an official report or regulator that names the publication, or a correction or clarification the publication itself issued. Phrase it strictly as a matter of record - "the article was amended in [year] following a complaint", "named in [official report]" - never as a finding of bad faith. If you are not confident a public-record item is real and locatable, cite nothing and give only a directional note such as "recent coverage of this topic at this title has tended to be critical".
+- DO NOT SPEND AN ENTRY ON THE BLINDINGLY OBVIOUS. Apply the same test you use for targets: if an entry simply restates the outlet's or organisation's basic, well-known character - a campaign group everyone already knows opposes this sector, a title with an obvious house line - it adds no insight, so skip it. Reach instead for specific, less-obvious signals: a documented correction, a recent editorial shift, a particular desk's tendency. Naming the single most obvious opposition body wastes the slot.
+- Advocacy organisations and campaign groups whose stated institutional mission is opposition to this sector or topic CAN be named as organisations where genuinely useful - but only if non-obvious. That is a public institutional position, not a characterisation of an individual.
+- Up to 5 entries, but quality over quantity - two genuinely useful, non-obvious entries beat five padded ones. Returning fewer than 3, or none, is fine if there are few real signals. Outlets, desks and programmes only.
 
 === WALL SUMMARY ===
 Be honest and proportionate. Some sectors have hard reputational walls, others have light or no walls. If the story has no real reputational wall - for example a positive consumer story from a popular brand - say so plainly rather than manufacturing hostility. For soft stories the real challenge is usually cut-through and avoiding a sponsored-content perception, not credibility.
 
 GENERAL RULES:
 - angles: 3-5 distinct news angles, each max 8 words, most viable first
+- score and reach: both integers 0-100, scored independently per the rules above
 - reason: max 2 sentences, grounded in specific, verifiable track record
 - evidence: max 1 sentence, a locatable reference (publication plus date/headline/subject)
 - pitch_angle: max 1 sentence
@@ -96,7 +107,7 @@ app.post('/api/analyse', async (req, res) => {
 
   const geoCtx = `Primary target geography: ${geography || 'UK'}.`;
 
-  const userMsg = `Analyse this story and identify media targets:\n\n${story}\n\n${sectorCtx}\n${geoCtx}\n\nCRITICAL REMINDERS:\n1. NO academics or declared-independent commentators in the targets list - they are not pitchable for industry-originated stories.\n2. Search exhaustively for NAMED mainstream journalists by their real bylines - especially those with a personal stake in the topic. Every target's evidence must point to a specific, locatable source.\n3. The avoid list is OUTLET, DESK or PROGRAMME level ONLY. Never name an individual journalist, columnist, editor or presenter in it. Use neutral, factual language about coverage tendency, and cite only genuine public record (official reports, corrections the publication issued).\n4. Calibrate the wall assessment honestly - do not manufacture hostility for soft stories.`;
+  const userMsg = `Analyse this story and identify media targets:\n\n${story}\n\n${sectorCtx}\n${geoCtx}\n\nCRITICAL REMINDERS:\n1. NO academics or declared-independent commentators in the targets list - they are not pitchable for industry-originated stories.\n2. Score every target on BOTH axes independently: score (likelihood to cover) and reach (audience size/impact). Do not make them the same number.\n3. Search exhaustively for NAMED mainstream journalists by their real bylines. Every target's evidence must point to a specific, locatable source.\n4. The avoid list is OUTLET, DESK or PROGRAMME level ONLY - never an individual. Use neutral, factual language, cite only genuine public record, and skip the blindingly obvious. Do not target a journalist from a desk you have flagged.\n5. Calibrate the wall assessment honestly - do not manufacture hostility for soft stories.`;
 
   try {
     const response = await client.messages.create({
@@ -146,5 +157,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`\nCommsReach v0.2 running at http://localhost:${PORT}\n`);
+  console.log(`\nCommsReach v0.3 running at http://localhost:${PORT}\n`);
 });

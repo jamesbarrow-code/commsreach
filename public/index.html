@@ -35,18 +35,10 @@
 
 html { background: var(--bg); color: var(--text); font-family: var(--sans); }
 
-body {
-  min-height: 100vh;
-  padding: 0;
-}
+body { min-height: 100vh; padding: 0; }
 
-.layout {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  min-height: 100vh;
-}
+.layout { display: grid; grid-template-columns: 340px 1fr; min-height: 100vh; }
 
-/* LEFT PANEL */
 .left-panel {
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -59,8 +51,6 @@ body {
   height: 100vh;
   overflow-y: auto;
 }
-
-.logo-block {}
 
 .logo-wordmark {
   font-family: var(--serif);
@@ -84,12 +74,7 @@ body {
   border-radius: 3px;
 }
 
-.logo-sub {
-  font-size: 12.5px;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.5;
-}
+.logo-sub { font-size: 12.5px; color: var(--text-secondary); font-weight: 300; line-height: 1.5; }
 
 .field-block { display: flex; flex-direction: column; gap: 8px; }
 
@@ -119,7 +104,6 @@ textarea, input {
 
 textarea:focus, input:focus { border-color: var(--border-hover); }
 textarea { min-height: 160px; }
-
 textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 
 .chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -138,12 +122,7 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 }
 
 .chip:hover { border-color: var(--border-hover); color: var(--text); }
-
-.chip.active {
-  border-color: var(--amber-border);
-  background: var(--amber-dim);
-  color: var(--amber);
-}
+.chip.active { border-color: var(--amber-border); background: var(--amber-dim); color: var(--amber); }
 
 .run-btn {
   width: 100%;
@@ -188,13 +167,8 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   letter-spacing: 0.05em;
 }
 
-/* RIGHT PANEL */
-.right-panel {
-  padding: 2.5rem 2.75rem;
-  overflow-y: auto;
-}
+.right-panel { padding: 2.5rem 2.75rem; overflow-y: auto; }
 
-/* EMPTY STATE */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -218,21 +192,9 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   margin-bottom: 0.5rem;
 }
 
-.empty-title {
-  font-family: var(--serif);
-  font-size: 20px;
-  color: var(--text-secondary);
-}
+.empty-title { font-family: var(--serif); font-size: 20px; color: var(--text-secondary); }
+.empty-sub { font-size: 13px; color: var(--text-tertiary); max-width: 320px; line-height: 1.6; font-weight: 300; }
 
-.empty-sub {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  max-width: 320px;
-  line-height: 1.6;
-  font-weight: 300;
-}
-
-/* LOADING */
 .loading-panel { display: none; }
 .loading-panel.visible { display: block; }
 
@@ -247,54 +209,24 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 }
 .stage:last-child { border-bottom: none; }
 
-.stage-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--border-hover);
-  flex-shrink: 0;
-  transition: background 0.3s;
-}
+.stage-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-hover); flex-shrink: 0; transition: background 0.3s; }
 .stage-dot.active { background: var(--amber); }
 .stage-dot.done { background: var(--green); }
 
-.stage-text {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text-tertiary);
-  transition: color 0.3s;
-}
+.stage-text { font-family: var(--mono); font-size: 12px; color: var(--text-tertiary); transition: color 0.3s; }
 .stage.active .stage-text { color: var(--text); }
 .stage.done .stage-text { color: var(--text-secondary); }
 
 .pulse { animation: pulse 1s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
-/* RESULTS */
 .results-panel { display: none; }
 .results-panel.visible { display: block; }
 
-.results-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border);
-}
+.results-header { margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.results-title { font-family: var(--serif); font-size: 26px; color: var(--text); margin-bottom: 6px; }
+.results-meta { font-family: var(--mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.06em; }
 
-.results-title {
-  font-family: var(--serif);
-  font-size: 26px;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-
-.results-meta {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-tertiary);
-  letter-spacing: 0.06em;
-}
-
-/* VERIFICATION NOTE */
 .verify-note {
   background: var(--surface-2);
   border: 1px solid var(--border);
@@ -315,31 +247,10 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   padding: 1rem 1.25rem;
   margin-bottom: 1.75rem;
 }
+.wall-box-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.wall-box-text { font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.65; }
 
-.wall-box-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 6px;
-}
-
-.wall-box-text {
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.65;
-}
-
-/* ANGLES */
-.angles-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 1.75rem;
-}
-
+.angles-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.75rem; }
 .angle-chip {
   font-size: 12px;
   padding: 5px 13px;
@@ -355,20 +266,8 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 .angle-chip:hover { border-color: var(--border-hover); color: var(--text); }
 .angle-chip.sel { border-color: var(--amber-border); background: var(--amber-dim); color: var(--amber); }
 
-/* SECTION HEADERS */
-.section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-size: 17px;
-  color: var(--text);
-}
-
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.section-title { font-family: var(--serif); font-size: 17px; color: var(--text); }
 .section-count {
   font-family: var(--mono);
   font-size: 10px;
@@ -379,64 +278,17 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   border-radius: 3px;
 }
 
-/* FILTER BAR */
-.filter-bar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 1rem;
-  align-items: center;
-}
+.filter-bar { display: flex; gap: 6px; margin-bottom: 1rem; align-items: center; flex-wrap: wrap; }
+.filter-label { font-family: var(--mono); font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-right: 4px; }
 
-.filter-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-tertiary);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-right: 4px;
-}
-
-/* TARGET CARDS */
 .cards-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem;
-  transition: border-color 0.15s;
-}
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; transition: border-color 0.15s; }
 .card:hover { border-color: var(--border-hover); }
-
-.card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
 .card-identity { flex: 1; min-width: 0; }
-
-.card-name {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--text);
-  margin-bottom: 3px;
-}
-
-.card-outlet-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-outlet {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-tertiary);
-  letter-spacing: 0.04em;
-}
-
+.card-name { font-family: var(--serif); font-size: 16px; color: var(--text); margin-bottom: 3px; }
+.card-outlet-row { display: flex; align-items: center; gap: 8px; }
+.card-outlet { font-family: var(--mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.04em; }
 .type-badge {
   font-family: var(--mono);
   font-size: 9px;
@@ -447,43 +299,18 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   border: 1px solid var(--border);
   color: var(--text-tertiary);
 }
-
 .type-badge.podcaster { border-color: rgba(76,175,125,0.3); color: var(--green); }
 .type-badge.newsletter { border-color: rgba(100,160,255,0.3); color: rgba(100,160,255,0.8); }
 .type-badge.youtuber { border-color: rgba(255,90,90,0.3); color: rgba(255,120,120,0.8); }
 .type-badge.commentator { border-color: var(--amber-border); color: var(--amber); }
 
-.score-block {
-  flex-shrink: 0;
-  margin-left: 16px;
-  text-align: right;
-}
+.score-block { flex-shrink: 0; margin-left: 16px; display: flex; gap: 18px; }
+.score-pair { text-align: center; }
+.score-num { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--amber); line-height: 1; }
+.reach-num { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--text-secondary); line-height: 1; }
+.score-lbl { font-family: var(--mono); font-size: 9px; color: var(--text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
-.score-num {
-  font-family: var(--mono);
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--amber);
-  line-height: 1;
-}
-
-.score-lbl {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text-tertiary);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.card-reason {
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.65;
-  margin-bottom: 10px;
-}
-
+.card-reason { font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.65; margin-bottom: 10px; }
 .card-pitch {
   font-size: 12.5px;
   color: var(--text-tertiary);
@@ -494,42 +321,13 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   padding-left: 12px;
   border-left: 2px solid var(--amber-border);
 }
-
-.card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-  gap: 8px;
-}
-
-.card-evidence {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--text-tertiary);
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); gap: 8px; }
+.card-evidence { font-family: var(--mono); font-size: 10.5px; color: var(--text-tertiary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
-
-.likelihood-pill {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 3px;
-}
-
+.likelihood-pill { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 3px; }
 .pill-high { background: var(--green-dim); color: var(--green); }
 .pill-medium { background: var(--amber-dim); color: var(--amber); }
 .pill-low { background: var(--surface-2); color: var(--text-tertiary); }
-
 .draft-btn {
   font-family: var(--mono);
   font-size: 10px;
@@ -545,18 +343,8 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 }
 .draft-btn:hover { border-color: var(--amber-border); color: var(--amber); }
 
-/* COVERAGE-RISK (AVOID) SECTION */
 .avoid-section { margin-top: 0.5rem; }
-
-.avoid-note {
-  font-size: 12px;
-  color: var(--text-tertiary);
-  font-weight: 300;
-  line-height: 1.55;
-  margin-bottom: 0.9rem;
-  max-width: 640px;
-}
-
+.avoid-note { font-size: 12px; color: var(--text-tertiary); font-weight: 300; line-height: 1.55; margin-bottom: 0.9rem; max-width: 640px; }
 .avoid-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -567,36 +355,12 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   gap: 12px;
   align-items: flex-start;
 }
+.avoid-x { font-size: 14px; color: var(--amber); flex-shrink: 0; margin-top: 1px; font-weight: 500; }
+.avoid-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.avoid-reason { font-size: 12px; color: var(--text-secondary); font-weight: 300; line-height: 1.55; }
 
-.avoid-x {
-  font-size: 14px;
-  color: var(--amber);
-  flex-shrink: 0;
-  margin-top: 1px;
-  font-weight: 500;
-}
+.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 
-.avoid-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 3px;
-}
-
-.avoid-reason {
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.55;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 2rem 0;
-}
-
-/* ERROR */
 .error-box {
   background: var(--red-dim);
   border: 1px solid rgba(255,90,90,0.2);
@@ -609,7 +373,6 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 }
 .error-box.visible { display: block; }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
@@ -619,7 +382,6 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 
 <div class="layout">
 
-  <!-- LEFT PANEL -->
   <aside class="left-panel">
 
     <div class="logo-block">
@@ -667,22 +429,19 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
     <div class="error-box" id="err-box"></div>
 
     <div class="left-footer">
-      CommsReach v0.2 &nbsp;·&nbsp; Built by James Barrow
+      CommsReach v0.3 &nbsp;·&nbsp; Built by James Barrow
     </div>
 
   </aside>
 
-  <!-- RIGHT PANEL -->
   <main class="right-panel" id="right-panel">
 
-    <!-- EMPTY STATE -->
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">→</div>
       <div class="empty-title">Paste a story to begin</div>
       <p class="empty-sub">CommsReach finds the journalists, podcasters, and independent voices most likely to cover your story — with evidence, not just beat categories.</p>
     </div>
 
-    <!-- LOADING -->
     <div class="loading-panel" id="loading-panel">
       <div style="font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:0.5rem;">Analysing story</div>
       <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-bottom:0;">Running live research across journalist databases, publications, podcasts and independent media…</div>
@@ -694,7 +453,6 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
       </div>
     </div>
 
-    <!-- RESULTS -->
     <div class="results-panel" id="results-panel"></div>
 
   </main>
@@ -794,7 +552,6 @@ function renderResults(data) {
   const avoid = data.avoid || [];
   const angles = data.angles || [];
   const wallText = data.wall_summary || '';
-  const storySnippet = document.getElementById('story-input').value.substring(0,120);
   const timestamp = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
 
   let html = '';
@@ -835,11 +592,18 @@ function renderResults(data) {
     <button class="chip" onclick="filterTier(this,'tier3')">Tier 3 — Possible</button>
   </div>`;
 
+  html += `<div class="filter-bar">
+    <span class="filter-label">Sort by</span>
+    <button class="chip active" onclick="setSort(this,'lk')">Likelihood</button>
+    <button class="chip" onclick="setSort(this,'reach')">Reach</button>
+  </div>`;
+
   html += '<div class="cards-list" id="cards-list">';
   targets.forEach((t, idx) => {
-    const sc = parseInt(t.score) || 60;
+    const lk = parseInt(t.score) || 60;
+    const rc = parseInt(t.reach) || 50;
     const tClass = typeClass(t.type);
-    html += `<div class="card" data-tier="${escHtml(t.tier||'tier2')}">
+    html += `<div class="card" data-tier="${escHtml(t.tier||'tier2')}" data-lk="${lk}" data-reach="${rc}">
       <div class="card-top">
         <div class="card-identity">
           <div class="card-name">${escHtml(t.name)}</div>
@@ -849,8 +613,8 @@ function renderResults(data) {
           </div>
         </div>
         <div class="score-block">
-          <div class="score-num">${sc}</div>
-          <div class="score-lbl">likelihood</div>
+          <div class="score-pair"><div class="score-num">${lk}</div><div class="score-lbl">likelihood</div></div>
+          <div class="score-pair"><div class="reach-num">${rc}</div><div class="score-lbl">reach</div></div>
         </div>
       </div>
       <div class="card-reason">${escHtml(t.reason)}</div>
@@ -858,7 +622,7 @@ function renderResults(data) {
       <div class="card-footer">
         <div class="card-evidence">${escHtml(t.evidence || '')}</div>
         <div class="card-actions">
-          <span class="likelihood-pill ${likelihoodClass(sc)}">${likelihoodLabel(sc)}</span>
+          <span class="likelihood-pill ${likelihoodClass(lk)}">${likelihoodLabel(lk)}</span>
           <button class="draft-btn" onclick="draftPitch(${idx})">Draft pitch →</button>
         </div>
       </div>
@@ -888,11 +652,25 @@ function renderResults(data) {
 }
 
 function filterTier(btn, tier) {
-  document.querySelectorAll('.filter-bar .chip').forEach(b => b.classList.remove('active'));
+  btn.parentNode.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.card').forEach(card => {
     card.style.display = (tier === 'all' || card.dataset.tier === tier) ? '' : 'none';
   });
+}
+
+function setSort(btn, mode) {
+  btn.parentNode.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const list = document.getElementById('cards-list');
+  if (!list) return;
+  const cards = Array.from(list.children);
+  cards.sort((a, b) => {
+    const av = parseInt(mode === 'reach' ? a.dataset.reach : a.dataset.lk) || 0;
+    const bv = parseInt(mode === 'reach' ? b.dataset.reach : b.dataset.lk) || 0;
+    return bv - av;
+  });
+  cards.forEach(c => list.appendChild(c));
 }
 
 function draftPitch(idx) {
@@ -926,11 +704,7 @@ async function runAnalysis() {
     const response = await fetch('/api/analyse', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        story,
-        sector: selectedSector,
-        geography: selectedGeo
-      })
+      body: JSON.stringify({ story, sector: selectedSector, geography: selectedGeo })
     });
 
     const data = await response.json();
