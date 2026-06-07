@@ -294,6 +294,20 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
   letter-spacing: 0.06em;
 }
 
+/* VERIFICATION NOTE */
+.verify-note {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+.verify-note strong { color: var(--text); font-weight: 500; }
+
 .wall-box {
   background: rgba(245,166,35,0.06);
   border: 1px solid var(--amber-border);
@@ -531,8 +545,17 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 }
 .draft-btn:hover { border-color: var(--amber-border); color: var(--amber); }
 
-/* AVOID SECTION */
+/* COVERAGE-RISK (AVOID) SECTION */
 .avoid-section { margin-top: 0.5rem; }
+
+.avoid-note {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 300;
+  line-height: 1.55;
+  margin-bottom: 0.9rem;
+  max-width: 640px;
+}
 
 .avoid-card {
   background: var(--surface);
@@ -547,10 +570,10 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 
 .avoid-x {
   font-size: 14px;
-  color: var(--text-tertiary);
+  color: var(--amber);
   flex-shrink: 0;
   margin-top: 1px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .avoid-name {
@@ -638,12 +661,13 @@ textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
 
     <div style="display:flex;flex-direction:column;gap:8px;">
       <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run intelligence →</button>
+      <button class="demo-btn" id="demo-btn" onclick="loadDemo()">Load example story</button>
     </div>
 
     <div class="error-box" id="err-box"></div>
 
     <div class="left-footer">
-      CommsReach v0.1 &nbsp;·&nbsp; Built by James Barrow
+      CommsReach v0.2 &nbsp;·&nbsp; Built by James Barrow
     </div>
 
   </aside>
@@ -780,6 +804,8 @@ function renderResults(data) {
     <div class="results-meta">${targets.length} targets identified &nbsp;·&nbsp; ${timestamp} &nbsp;·&nbsp; ${selectedGeo}${selectedSector ? ' · ' + selectedSector : ''}</div>
   </div>`;
 
+  html += `<div class="verify-note"><strong>AI-generated intelligence — directional, not definitive.</strong> Verify every named journalist and the evidence cited before acting on it. The coverage-risk section flags outlets for sequencing and framing; it is not an assessment of any individual.</div>`;
+
   if (wallText) {
     html += `<div class="wall-box">
       <div class="wall-box-label">Wall assessment</div>
@@ -842,11 +868,12 @@ function renderResults(data) {
 
   if (avoid.length) {
     html += '<hr class="divider">';
-    html += `<div class="section-head"><span class="section-title">Do not pitch</span><span class="section-count">${avoid.length} outlets</span></div>`;
+    html += `<div class="section-head"><span class="section-title">Coverage-risk outlets</span><span class="section-count">${avoid.length} outlets</span></div>`;
+    html += `<p class="avoid-note">Publications, desks or programmes whose coverage of this topic has tended to be critical — guidance for sequencing and framing, not a judgement of any individual journalist. Verify before relying on it.</p>`;
     html += '<div class="avoid-section">';
     avoid.forEach(a => {
       html += `<div class="avoid-card">
-        <div class="avoid-x">✕</div>
+        <div class="avoid-x">!</div>
         <div>
           <div class="avoid-name">${escHtml(a.name)}</div>
           <div class="avoid-reason">${escHtml(a.reason)}</div>
@@ -934,7 +961,14 @@ async function runAnalysis() {
 }
 
 function loadDemo() {
-  // Removed - no longer used
+  document.getElementById('story-input').value = `Brightleaf Oat Co., the British oat drink brand, today published independent research showing that 68 per cent of UK coffee drinkers could not distinguish its barista oat milk from dairy in a blind taste test. The survey of 4,000 adults, carried out by an independent research agency in March 2026, accompanies the launch of Brightleaf Barista Edition - now B Corp certified and supplied in fully recyclable cartons. The brand says the findings challenge the assumption that plant-based milks compromise on taste, and is calling for clearer front-of-pack labelling across the category.`;
+  document.querySelectorAll('#sector-chips .chip').forEach(b => b.classList.remove('active'));
+  const fd = document.querySelector('#sector-chips .chip[data-val="food & drink"]');
+  if (fd) { fd.classList.add('active'); selectedSector = 'food & drink'; }
+  document.querySelectorAll('#geo-chips .chip').forEach(b => b.classList.remove('active'));
+  const uk = document.querySelector('#geo-chips .chip[data-val="UK"]');
+  if (uk) { uk.classList.add('active'); selectedGeo = 'UK'; }
+  clearError();
 }
 </script>
 
