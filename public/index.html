@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CommsReach — Journalist Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0D0D0D;
+  --surface: #141414;
+  --surface-2: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
+  --text: #F0EEE8;
+  --text-secondary: rgba(240,238,232,0.5);
+  --text-tertiary: rgba(240,238,232,0.28);
+  --amber: #F5A623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --amber-border: rgba(245,166,35,0.3);
+  --green: #4CAF7D;
+  --green-dim: rgba(76,175,125,0.12);
+  --red-dim: rgba(255,90,90,0.1);
+  --red: rgba(255,90,90,0.8);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+html { background: var(--bg); color: var(--text); font-family: var(--sans); }
+
+body {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo-block {}
+
+.logo-wordmark {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.logo-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+.logo-sub {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.field-block { display: flex; flex-direction: column; gap: 8px; }
+
+.field-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+textarea, input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
+}
+
+textarea:focus, input:focus { border-color: var(--border-hover); }
+textarea { min-height: 160px; }
+
+textarea::placeholder, input::placeholder { color: var(--text-tertiary); }
+
+.chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.chip {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover { border-color: var(--border-hover); color: var(--text); }
+
+.chip.active {
+  border-color: var(--amber-border);
+  background: var(--amber-dim);
+  color: var(--amber);
+}
+
+.run-btn {
+  width: 100%;
+  background: var(--amber);
+  color: #0D0D0D;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.run-btn:hover { opacity: 0.88; }
+.run-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.demo-btn {
+  width: 100%;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.demo-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
+.left-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  padding: 2.5rem 2.75rem;
+  overflow-y: auto;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 1rem;
+}
+
+.empty-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.empty-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  max-width: 320px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* LOADING */
+.loading-panel { display: none; }
+.loading-panel.visible { display: block; }
+
+.stages { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; }
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stage:last-child { border-bottom: none; }
+
+.stage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-hover);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.stage-dot.active { background: var(--amber); }
+.stage-dot.done { background: var(--green); }
+
+.stage-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  transition: color 0.3s;
+}
+.stage.active .stage-text { color: var(--text); }
+.stage.done .stage-text { color: var(--text-secondary); }
+
+.pulse { animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* RESULTS */
+.results-panel { display: none; }
+.results-panel.visible { display: block; }
+
+.results-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.results-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+.wall-box {
+  background: rgba(245,166,35,0.06);
+  border: 1px solid var(--amber-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.wall-box-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.wall-box-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+/* ANGLES */
+.angles-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.angle-chip {
+  font-size: 12px;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--sans);
+  font-weight: 300;
+}
+.angle-chip:hover { border-color: var(--border-hover); color: var(--text); }
+.angle-chip.sel { border-color: var(--amber-border); background: var(--amber-dim); color: var(--amber); }
+
+/* SECTION HEADERS */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--text);
+}
+
+.section-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.filter-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+/* TARGET CARDS */
+.cards-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  transition: border-color 0.15s;
+}
+.card:hover { border-color: var(--border-hover); }
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-identity { flex: 1; min-width: 0; }
+
+.card-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.card-outlet-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-outlet {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+}
+
+.type-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+}
+
+.type-badge.podcaster { border-color: rgba(76,175,125,0.3); color: var(--green); }
+.type-badge.newsletter { border-color: rgba(100,160,255,0.3); color: rgba(100,160,255,0.8); }
+.type-badge.youtuber { border-color: rgba(255,90,90,0.3); color: rgba(255,120,120,0.8); }
+.type-badge.commentator { border-color: var(--amber-border); color: var(--amber); }
+
+.score-block {
+  flex-shrink: 0;
+  margin-left: 16px;
+  text-align: right;
+}
+
+.score-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--amber);
+  line-height: 1;
+}
+
+.score-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.card-reason {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+
+.card-pitch {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  margin-bottom: 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--amber-border);
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  gap: 8px;
+}
+
+.card-evidence {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+.likelihood-pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 3px;
+}
+
+.pill-high { background: var(--green-dim); color: var(--green); }
+.pill-medium { background: var(--amber-dim); color: var(--amber); }
+.pill-low { background: var(--surface-2); color: var(--text-tertiary); }
+
+.draft-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.draft-btn:hover { border-color: var(--amber-border); color: var(--amber); }
+
+/* AVOID SECTION */
+.avoid-section { margin-top: 0.5rem; }
+
+.avoid-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.avoid-x {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 300;
+}
+
+.avoid-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.avoid-reason {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ERROR */
+.error-box {
+  background: var(--red-dim);
+  border: 1px solid rgba(255,90,90,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--red);
+  margin-top: 10px;
+  display: none;
+}
+.error-box.visible { display: block; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- LEFT PANEL -->
+  <aside class="left-panel">
+
+    <div class="logo-block">
+      <div class="logo-wordmark">
+        CommsReach
+        <span class="logo-badge">Beta</span>
+      </div>
+      <p class="logo-sub">Journalist intelligence for stories that deserve better coverage than they get.</p>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label" for="story-input">Story brief or press release</label>
+      <textarea id="story-input" placeholder="Paste your press release, story brief, or describe the story and its news hook…"></textarea>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label">Sector context</label>
+      <div class="chip-group" id="sector-chips">
+        <button class="chip" data-val="tobacco/nicotine">Tobacco / nicotine</button>
+        <button class="chip" data-val="pharma/biotech">Pharma / biotech</button>
+        <button class="chip" data-val="financial services">Financial services</button>
+        <button class="chip" data-val="energy/net zero">Energy / net zero</button>
+        <button class="chip" data-val="gambling">Gambling</button>
+        <button class="chip" data-val="food & drink">Food &amp; drink</button>
+        <button class="chip" data-val="technology">Technology</button>
+        <button class="chip" data-val="other regulated">Other regulated</button>
+      </div>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label">Geography</label>
+      <div class="chip-group" id="geo-chips">
+        <button class="chip active" data-val="UK">UK</button>
+        <button class="chip" data-val="US">US</button>
+        <button class="chip" data-val="Europe">Europe</button>
+        <button class="chip" data-val="Global">Global</button>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run intelligence →</button>
+    </div>
+
+    <div class="error-box" id="err-box"></div>
+
+    <div class="left-footer">
+      CommsReach v0.1 &nbsp;·&nbsp; Built by James Barrow
+    </div>
+
+  </aside>
+
+  <!-- RIGHT PANEL -->
+  <main class="right-panel" id="right-panel">
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">→</div>
+      <div class="empty-title">Paste a story to begin</div>
+      <p class="empty-sub">CommsReach finds the journalists, podcasters, and independent voices most likely to cover your story — with evidence, not just beat categories.</p>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-panel" id="loading-panel">
+      <div style="font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:0.5rem;">Analysing story</div>
+      <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-bottom:0;">Running live research across journalist databases, publications, podcasts and independent media…</div>
+      <div class="stages">
+        <div class="stage" id="st1"><div class="stage-dot" id="sd1"></div><span class="stage-text" id="sl1">Extracting news angles</span></div>
+        <div class="stage" id="st2"><div class="stage-dot" id="sd2"></div><span class="stage-text" id="sl2">Researching journalist landscape</span></div>
+        <div class="stage" id="st3"><div class="stage-dot" id="sd3"></div><span class="stage-text" id="sl3">Scoring and ranking targets</span></div>
+        <div class="stage" id="st4"><div class="stage-dot" id="sd4"></div><span class="stage-text" id="sl4">Building wall analysis</span></div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-panel" id="results-panel"></div>
+
+  </main>
+
+</div>
+
+<script>
+let selectedSector = '';
+let selectedGeo = 'UK';
+let currentData = null;
+
+document.querySelectorAll('#sector-chips .chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const wasActive = btn.classList.contains('active');
+    document.querySelectorAll('#sector-chips .chip').forEach(b => b.classList.remove('active'));
+    if (!wasActive) { btn.classList.add('active'); selectedSector = btn.dataset.val; }
+    else { selectedSector = ''; }
+  });
+});
+
+document.querySelectorAll('#geo-chips .chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#geo-chips .chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedGeo = btn.dataset.val;
+  });
+});
+
+function setStage(n) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('sd' + i);
+    const lbl = document.getElementById('sl' + i);
+    const stage = document.getElementById('st' + i);
+    dot.classList.remove('active','done');
+    stage.classList.remove('active','done');
+    const pulse = lbl.querySelector('.pulse');
+    if (pulse) pulse.remove();
+    if (i < n) { dot.classList.add('done'); stage.classList.add('done'); }
+    else if (i === n) {
+      dot.classList.add('active'); stage.classList.add('active');
+      const sp = document.createElement('span');
+      sp.className = 'pulse'; sp.textContent = ' ●';
+      lbl.appendChild(sp);
+    }
+  }
+}
+
+function showPanel(name) {
+  document.getElementById('empty-state').style.display = name === 'empty' ? '' : 'none';
+  const lp = document.getElementById('loading-panel');
+  const rp = document.getElementById('results-panel');
+  lp.classList.toggle('visible', name === 'loading');
+  rp.classList.toggle('visible', name === 'results');
+}
+
+function showError(msg) {
+  const box = document.getElementById('err-box');
+  box.textContent = msg;
+  box.classList.add('visible');
+}
+
+function clearError() {
+  document.getElementById('err-box').classList.remove('visible');
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function likelihoodClass(score) {
+  const s = parseInt(score) || 50;
+  if (s >= 75) return 'pill-high';
+  if (s >= 50) return 'pill-medium';
+  return 'pill-low';
+}
+
+function likelihoodLabel(score) {
+  const s = parseInt(score) || 50;
+  if (s >= 75) return 'High';
+  if (s >= 50) return 'Medium';
+  return 'Low';
+}
+
+function typeClass(type) {
+  const t = (type || 'journalist').toLowerCase();
+  if (t.includes('podcast')) return 'podcaster';
+  if (t.includes('newsletter')) return 'newsletter';
+  if (t.includes('youtube')) return 'youtuber';
+  if (t.includes('comment')) return 'commentator';
+  return '';
+}
+
+function renderResults(data) {
+  currentData = data;
+  const targets = data.targets || [];
+  const avoid = data.avoid || [];
+  const angles = data.angles || [];
+  const wallText = data.wall_summary || '';
+  const storySnippet = document.getElementById('story-input').value.substring(0,120);
+  const timestamp = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+
+  let html = '';
+
+  html += `<div class="results-header">
+    <div class="results-title">Intelligence report</div>
+    <div class="results-meta">${targets.length} targets identified &nbsp;·&nbsp; ${timestamp} &nbsp;·&nbsp; ${selectedGeo}${selectedSector ? ' · ' + selectedSector : ''}</div>
+  </div>`;
+
+  if (wallText) {
+    html += `<div class="wall-box">
+      <div class="wall-box-label">Wall assessment</div>
+      <div class="wall-box-text">${escHtml(wallText)}</div>
+    </div>`;
+  }
+
+  if (angles.length) {
+    html += `<div class="section-head"><span class="section-title">News angles</span><span class="section-count">${angles.length} identified</span></div>`;
+    html += '<div class="angles-row">';
+    angles.forEach((a, i) => {
+      html += `<button class="angle-chip ${i===0?'sel':''}" onclick="this.parentNode.querySelectorAll('.angle-chip').forEach(x=>x.classList.remove('sel'));this.classList.add('sel');">${escHtml(a)}</button>`;
+    });
+    html += '</div>';
+  }
+
+  html += `<div class="section-head">
+    <span class="section-title">Journalist targets</span>
+    <span class="section-count">${targets.length} identified</span>
+  </div>`;
+
+  html += `<div class="filter-bar">
+    <span class="filter-label">Tier</span>
+    <button class="chip active" onclick="filterTier(this,'all')">All</button>
+    <button class="chip" onclick="filterTier(this,'tier1')">Tier 1 — High</button>
+    <button class="chip" onclick="filterTier(this,'tier2')">Tier 2 — Medium</button>
+    <button class="chip" onclick="filterTier(this,'tier3')">Tier 3 — Possible</button>
+  </div>`;
+
+  html += '<div class="cards-list" id="cards-list">';
+  targets.forEach((t, idx) => {
+    const sc = parseInt(t.score) || 60;
+    const tClass = typeClass(t.type);
+    html += `<div class="card" data-tier="${escHtml(t.tier||'tier2')}">
+      <div class="card-top">
+        <div class="card-identity">
+          <div class="card-name">${escHtml(t.name)}</div>
+          <div class="card-outlet-row">
+            <span class="card-outlet">${escHtml(t.outlet)}</span>
+            ${tClass ? `<span class="type-badge ${tClass}">${escHtml(t.type||'journalist')}</span>` : ''}
+          </div>
+        </div>
+        <div class="score-block">
+          <div class="score-num">${sc}</div>
+          <div class="score-lbl">likelihood</div>
+        </div>
+      </div>
+      <div class="card-reason">${escHtml(t.reason)}</div>
+      ${t.pitch_angle ? `<div class="card-pitch">${escHtml(t.pitch_angle)}</div>` : ''}
+      <div class="card-footer">
+        <div class="card-evidence">${escHtml(t.evidence || '')}</div>
+        <div class="card-actions">
+          <span class="likelihood-pill ${likelihoodClass(sc)}">${likelihoodLabel(sc)}</span>
+          <button class="draft-btn" onclick="draftPitch(${idx})">Draft pitch →</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  if (avoid.length) {
+    html += '<hr class="divider">';
+    html += `<div class="section-head"><span class="section-title">Do not pitch</span><span class="section-count">${avoid.length} outlets</span></div>`;
+    html += '<div class="avoid-section">';
+    avoid.forEach(a => {
+      html += `<div class="avoid-card">
+        <div class="avoid-x">✕</div>
+        <div>
+          <div class="avoid-name">${escHtml(a.name)}</div>
+          <div class="avoid-reason">${escHtml(a.reason)}</div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('results-panel').innerHTML = html;
+  showPanel('results');
+}
+
+function filterTier(btn, tier) {
+  document.querySelectorAll('.filter-bar .chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.display = (tier === 'all' || card.dataset.tier === tier) ? '' : 'none';
+  });
+}
+
+function draftPitch(idx) {
+  if (!currentData || !currentData.targets) return;
+  const t = currentData.targets[idx];
+  if (!t) return;
+  const story = document.getElementById('story-input').value.substring(0, 300);
+  alert(`To draft a pitch for ${t.name} at ${t.outlet}, take this to your Claude conversation:\n\n"Draft a pitch email to ${t.name} at ${t.outlet}. Story: ${story.substring(0,150)}… Pitch angle: ${t.pitch_angle || t.reason}"`);
+}
+
+async function runAnalysis() {
+  clearError();
+  const story = document.getElementById('story-input').value.trim();
+  if (!story || story.length < 50) {
+    showError('Please paste a story brief of at least a few sentences.');
+    return;
+  }
+
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.textContent = 'Analysing…';
+
+  showPanel('loading');
+  setStage(1);
+
+  setTimeout(() => setStage(2), 800);
+  setTimeout(() => setStage(3), 3500);
+  setTimeout(() => setStage(4), 6000);
+
+  try {
+    const response = await fetch('/api/analyse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        story,
+        sector: selectedSector,
+        geography: selectedGeo
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Analysis failed');
+    }
+
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('sd' + i).classList.remove('active');
+      document.getElementById('sd' + i).classList.add('done');
+      document.getElementById('st' + i).classList.remove('active');
+      document.getElementById('st' + i).classList.add('done');
+      const lbl = document.getElementById('sl' + i);
+      const pulse = lbl.querySelector('.pulse');
+      if (pulse) pulse.remove();
+    }
+
+    renderResults(data);
+
+  } catch (err) {
+    showPanel('empty');
+    showError('Analysis failed: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Run intelligence →';
+  }
+}
+
+function loadDemo() {
+  // Removed - no longer used
+}
+</script>
+
+</body>
+</html>
